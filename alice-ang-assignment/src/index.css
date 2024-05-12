@@ -1,0 +1,14 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    @apply overscroll-none;
+    @apply overflow-x-hidden;
+  }
+  html {
+    @apply overscroll-none;
+    @apply overflow-x-hidden;
+  }
+}
