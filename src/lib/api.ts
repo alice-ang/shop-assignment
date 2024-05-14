@@ -29,6 +29,10 @@ export const getProducts = async () => {
   return get<{ data: Product[] }>("/products");
 };
 
+export const getProductById = async (id: string) => {
+  return get<{ data: Product }>(`/products/${id}`);
+};
+
 // /**
 //  * Create an order
 //  */
