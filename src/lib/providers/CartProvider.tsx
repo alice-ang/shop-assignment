@@ -5,7 +5,7 @@ import {
   PropsWithChildren,
   useContext,
 } from "react";
-import { Product } from "./types";
+import { Product } from "../types";
 
 type CartData = {
   cartItems: Product[];

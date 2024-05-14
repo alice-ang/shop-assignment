@@ -25,15 +25,12 @@ const post = async <Payload, Response = unknown>(
   return res.data;
 };
 
-/**
- * Get all todos
- */
 export const getProducts = async () => {
-  return get<Product[]>("/products");
+  return get<{ data: Product[] }>("/products");
 };
 
 // /**
-//  * Create a todo
+//  * Create an order
 //  */
 // export const createTodo = (todo: NewTodo) => {
 //   return post<NewTodo, Product>("/todos", todo);
