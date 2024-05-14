@@ -14,6 +14,8 @@ type CartData = {
   removeFromCart: (item: Product) => void;
   clearCart: () => void;
   getCartTotal: () => number;
+  decrease: (id: number) => void;
+  increase: (id: number) => void;
 };
 
 const CartContext = createContext<CartData>({
@@ -22,7 +24,10 @@ const CartContext = createContext<CartData>({
   removeFromCart: () => {},
   clearCart: () => {},
   getCartTotal: () => 0,
+  decrease: () => {},
+  increase: () => {},
 });
+
 export default function CartProvider({ children }: PropsWithChildren) {
   const [cartItems, setCartItems] = useState<Product[]>(
     localStorage.getItem("cartItems")
@@ -73,6 +78,30 @@ export default function CartProvider({ children }: PropsWithChildren) {
     );
   };
 
+  const increase = (id: number) => {
+    setCartItems(
+      cartItems.map((cartItem) =>
+        cartItem.id === id
+          ? { ...cartItem, count: cartItem.stock_quantity + 1 }
+          : cartItem
+      )
+    );
+  };
+
+  const decrease = (id: number) => {
+    setCartItems(
+      cartItems.map((cartItem) =>
+        cartItem.id === id
+          ? {
+              ...cartItem,
+              count:
+                cartItem.stock_quantity > 1 ? cartItem.stock_quantity - 1 : 1,
+            }
+          : cartItem
+      )
+    );
+  };
+
   useEffect(() => {
     const data = localStorage.getItem("cartItems");
     if (data) {
@@ -92,6 +121,8 @@ export default function CartProvider({ children }: PropsWithChildren) {
         removeFromCart,
         clearCart,
         getCartTotal,
+        increase,
+        decrease,
       }}
     >
       {children}
