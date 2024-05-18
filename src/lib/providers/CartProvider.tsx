@@ -1,3 +1,4 @@
+"use client";
 import {
   createContext,
   useState,
@@ -9,28 +10,29 @@ import { Product } from "../types";
 
 type CartData = {
   cartItems: Product[];
-
   addToCart: (newItem: Product) => void;
   removeFromCart: (item: Product) => void;
   clearCart: () => void;
-  getCartTotal: () => number;
+  getCartTotalPrice: () => number;
   decrease: (id: number) => void;
   increase: (id: number) => void;
+  getCartTotalItems: () => number;
 };
 
-const CartContext = createContext<CartData>({
+export const CartContext = createContext<CartData>({
   cartItems: [],
   addToCart: () => {},
   removeFromCart: () => {},
   clearCart: () => {},
-  getCartTotal: () => 0,
+  getCartTotalPrice: () => 0,
   decrease: () => {},
   increase: () => {},
+  getCartTotalItems: () => 0,
 });
 
 export default function CartProvider({ children }: PropsWithChildren) {
   const [cartItems, setCartItems] = useState<Product[]>(
-    localStorage.getItem("cartItems")
+    typeof window !== "undefined" && localStorage.getItem("cartItems")
       ? JSON.parse(localStorage.getItem("cartItems") as string)
       : []
   );
@@ -71,9 +73,16 @@ export default function CartProvider({ children }: PropsWithChildren) {
     setCartItems([]);
   };
 
-  const getCartTotal = () => {
+  const getCartTotalPrice = () => {
     return cartItems.reduce(
       (total, item) => total + item.price * item.stock_quantity,
+      0
+    );
+  };
+
+  const getCartTotalItems = () => {
+    return cartItems.reduce(
+      (total, item) => (total = total + item.stock_quantity),
       0
     );
   };
@@ -120,9 +129,10 @@ export default function CartProvider({ children }: PropsWithChildren) {
         addToCart,
         removeFromCart,
         clearCart,
-        getCartTotal,
+        getCartTotalPrice,
         increase,
         decrease,
+        getCartTotalItems,
       }}
     >
       {children}

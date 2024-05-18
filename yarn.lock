@@ -1359,6 +1359,11 @@ react-hook-form@^7.51.4:
   resolved "https://registry.npmjs.org/react-hook-form/-/react-hook-form-7.51.4.tgz"
   integrity sha512-V14i8SEkh+V1gs6YtD0hdHYnoL4tp/HX/A45wWQN15CYr9bFRmmRdYStSO5L65lCCZRF+kYiSKhm9alqbcdiVA==
 
+react-icons@^5.2.1:
+  version "5.2.1"
+  resolved "https://registry.yarnpkg.com/react-icons/-/react-icons-5.2.1.tgz#28c2040917b2a2eda639b0f797bff1888e018e4a"
+  integrity sha512-zdbW5GstTzXaVKvGSyTaBalt7HSfuK5ovrzlpyiWHAFXndXTdd/1hdDHI4xBM1Mn7YriT6aqESucFl9kEXzrdw==
+
 react-markdown@^9.0.1:
   version "9.0.1"
   resolved "https://registry.yarnpkg.com/react-markdown/-/react-markdown-9.0.1.tgz#c05ddbff67fd3b3f839f8c648e6fb35d022397d1"
