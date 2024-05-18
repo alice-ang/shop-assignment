@@ -6,6 +6,7 @@ export type Product = {
   description?: string;
   images: Images;
   stock_status: string;
+  quantity: number;
   stock_quantity: number;
   tags: Tag[];
 };

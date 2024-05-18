@@ -14,8 +14,7 @@ type CartData = {
   removeFromCart: (item: Product) => void;
   clearCart: () => void;
   getCartTotalPrice: () => number;
-  decrease: (id: number) => void;
-  increase: (id: number) => void;
+
   getCartTotalItems: () => number;
 };
 
@@ -25,8 +24,7 @@ export const CartContext = createContext<CartData>({
   removeFromCart: () => {},
   clearCart: () => {},
   getCartTotalPrice: () => 0,
-  decrease: () => {},
-  increase: () => {},
+
   getCartTotalItems: () => 0,
 });
 
@@ -37,6 +35,13 @@ export default function CartProvider({ children }: PropsWithChildren) {
       : []
   );
 
+  /**
+   * Adds an item to the cart.
+   * If the item is already in the cart, it increases the quantity by 1.
+   * If the item is not in the cart, it adds the item with a quantity of 1.
+   *
+   * @param item - The item to be added to the cart.
+   */
   const addToCart = (item: Product) => {
     const isItemInCart = cartItems.find((cartItem) => cartItem.id === item.id);
 
@@ -44,12 +49,12 @@ export default function CartProvider({ children }: PropsWithChildren) {
       setCartItems(
         cartItems.map((cartItem) =>
           cartItem.id === item.id
-            ? { ...cartItem, quantity: cartItem.stock_quantity + 1 }
+            ? { ...cartItem, quantity: cartItem.quantity + 1 }
             : cartItem
         )
       );
     } else {
-      setCartItems([...cartItems, { ...item, stock_quantity: 1 }]);
+      setCartItems([...cartItems, { ...item, quantity: 1 }]);
     }
   };
 
@@ -62,7 +67,7 @@ export default function CartProvider({ children }: PropsWithChildren) {
       setCartItems(
         cartItems.map((cartItem) =>
           cartItem.id === item.id
-            ? { ...cartItem, quantity: cartItem.stock_quantity - 1 }
+            ? { ...cartItem, quantity: cartItem.quantity - 1 }
             : cartItem
         )
       );
@@ -75,39 +80,15 @@ export default function CartProvider({ children }: PropsWithChildren) {
 
   const getCartTotalPrice = () => {
     return cartItems.reduce(
-      (total, item) => total + item.price * item.stock_quantity,
+      (total, item) => total + item.price * item.quantity,
       0
     );
   };
 
   const getCartTotalItems = () => {
     return cartItems.reduce(
-      (total, item) => (total = total + item.stock_quantity),
+      (total, item) => (total = total + item.quantity),
       0
-    );
-  };
-
-  const increase = (id: number) => {
-    setCartItems(
-      cartItems.map((cartItem) =>
-        cartItem.id === id
-          ? { ...cartItem, count: cartItem.stock_quantity + 1 }
-          : cartItem
-      )
-    );
-  };
-
-  const decrease = (id: number) => {
-    setCartItems(
-      cartItems.map((cartItem) =>
-        cartItem.id === id
-          ? {
-              ...cartItem,
-              count:
-                cartItem.stock_quantity > 1 ? cartItem.stock_quantity - 1 : 1,
-            }
-          : cartItem
-      )
     );
   };
 
@@ -130,8 +111,7 @@ export default function CartProvider({ children }: PropsWithChildren) {
         removeFromCart,
         clearCart,
         getCartTotalPrice,
-        increase,
-        decrease,
+
         getCartTotalItems,
       }}
     >

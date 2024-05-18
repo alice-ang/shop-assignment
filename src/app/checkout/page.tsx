@@ -36,6 +36,7 @@ export default function CheckoutPage() {
 
   return (
     <main className="flex min-h-screen flex-col items-center justify-center p-24">
+      <Cart />
       <form onSubmit={handleSubmit(onSubmit)} className="border-2">
         <fieldset className="flex flex-col space-y-2">
           <legend>Order</legend>

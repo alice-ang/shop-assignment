@@ -1,9 +1,9 @@
 import React from "react";
 import { useCart } from "@/lib/providers/CartProvider";
+import { Product } from "@/lib/types";
 
 export const Cart = () => {
-  const { decrease, removeFromCart, cartItems, increase, getCartTotalPrice } =
-    useCart();
+  const { removeFromCart, cartItems, getCartTotalPrice, addToCart } = useCart();
 
   return (
     <div className="border-2">
@@ -20,9 +20,8 @@ export const Cart = () => {
 
             <p>Price: {product.price} SEK</p>
 
-            <button onClick={() => decrease(product.id)}>-</button>
             <button onClick={() => removeFromCart(product)}>Remove</button>
-            <button onClick={() => increase(product.id)}>+</button>
+            <button onClick={() => addToCart(product)}>add</button>
           </div>
         </div>
       ))}
