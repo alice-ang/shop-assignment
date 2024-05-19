@@ -82,17 +82,15 @@ export default function CheckoutPage() {
           onSubmit={handleSubmit(onSubmit)}
           className="col-span-12 lg:col-span-4 border-2 p-4"
         >
-          <fieldset className=" flex-col space-y-2 items-center text-center [&>input]:border-2 grid grid-cols-2 gap-2">
-            <legend>Order</legend>
-            <label>
-              First name
-              <input
-                {...register("firstName")}
-                placeholder="firstname"
-                required
-                className="col-span-2 lg:col-span-1"
-              />
-            </label>
+          <fieldset className=" flex-col space-y-2 items-center text-center [&>input]:border-2 border-black grid grid-cols-2 gap-2">
+            <legend>Leverensinformation</legend>
+
+            <input
+              {...register("firstName")}
+              placeholder="firstname"
+              required
+              className="col-span-2 lg:col-span-1"
+            />
 
             <input
               {...register("lastName")}

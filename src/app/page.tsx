@@ -15,7 +15,6 @@ export default function Home() {
 
   return (
     <main className="flex min-h-screen flex-col items-center justify-between p-24">
-      <h1>Bortakväll :)</h1>
       <Cart />
       <div className="grid grid-cols-12 gap-4">
         {products.data.map((product) => (
