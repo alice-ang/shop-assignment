@@ -6,15 +6,14 @@ import {
   PropsWithChildren,
   useContext,
 } from "react";
-import { Product } from "../types";
+import { CartItem, Product } from "../types";
 
 type CartData = {
-  cartItems: Product[];
-  addToCart: (newItem: Product) => void;
-  removeFromCart: (item: Product) => void;
+  cartItems: CartItem[];
+  addToCart: (cartItem: CartItem) => void;
+  removeFromCart: (cartItem: CartItem) => void;
   clearCart: () => void;
   getCartTotalPrice: () => number;
-
   getCartTotalItems: () => number;
 };
 
@@ -24,12 +23,11 @@ export const CartContext = createContext<CartData>({
   removeFromCart: () => {},
   clearCart: () => {},
   getCartTotalPrice: () => 0,
-
   getCartTotalItems: () => 0,
 });
 
 export default function CartProvider({ children }: PropsWithChildren) {
-  const [cartItems, setCartItems] = useState<Product[]>(
+  const [cartItems, setCartItems] = useState<CartItem[]>(
     typeof window !== "undefined" && localStorage.getItem("cartItems")
       ? JSON.parse(localStorage.getItem("cartItems") as string)
       : []
@@ -42,7 +40,7 @@ export default function CartProvider({ children }: PropsWithChildren) {
    *
    * @param item - The item to be added to the cart.
    */
-  const addToCart = (item: Product) => {
+  const addToCart = (item: CartItem) => {
     const isItemInCart = cartItems.find((cartItem) => cartItem.id === item.id);
 
     if (isItemInCart) {
@@ -58,10 +56,18 @@ export default function CartProvider({ children }: PropsWithChildren) {
     }
   };
 
-  const removeFromCart = (item: Product) => {
+  /**
+   * Removes an item from the cart.
+   * If the item quantity is 1, it removes the item from the cart.
+   * If the item quantity is greater than 1, it decreases the quantity by 1.
+   *
+   * @param item - The item to be removed from the cart.
+   */
+
+  const removeFromCart = (item: CartItem) => {
     const isItemInCart = cartItems.find((cartItem) => cartItem.id === item.id);
 
-    if (isItemInCart?.stock_quantity === 1) {
+    if (isItemInCart?.quantity === 1) {
       setCartItems(cartItems.filter((cartItem) => cartItem.id !== item.id));
     } else {
       setCartItems(
@@ -111,7 +117,6 @@ export default function CartProvider({ children }: PropsWithChildren) {
         removeFromCart,
         clearCart,
         getCartTotalPrice,
-
         getCartTotalItems,
       }}
     >

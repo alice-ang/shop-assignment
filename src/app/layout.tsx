@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
 import TanStackProvider from "@/lib/providers/TanStackProvider";
-import { Navigation } from "@/components";
+import { Cart, Navigation } from "@/components";
 import CartProvider from "@/lib/providers/CartProvider";
 
 const inter = Inter({ subsets: ["latin"] });
@@ -23,7 +23,7 @@ export default function RootLayout({
         <html lang="en">
           <body className={inter.className}>
             <Navigation />
-            {children}
+            <Cart>{children}</Cart>
           </body>
         </html>
       </CartProvider>

@@ -1,6 +1,10 @@
 "use client";
-import { Cart } from "@/components";
+import { Cart, Constraints } from "@/components";
+import { useCart } from "@/lib/providers/CartProvider";
 import { useForm, SubmitHandler } from "react-hook-form";
+
+import { MdAdd, MdOutlineRemove } from "react-icons/md";
+import Image from "next/image";
 
 type CheckoutValues = {
   firstName: string;
@@ -13,7 +17,13 @@ type CheckoutValues = {
 };
 
 export default function CheckoutPage() {
-  const { register, handleSubmit } = useForm<CheckoutValues>();
+  const { cartItems, removeFromCart, addToCart } = useCart();
+
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<CheckoutValues>();
   const onSubmit: SubmitHandler<CheckoutValues> = (data) => console.log(data);
 
   // I varukorgen ska en “Gå till kassan”-knapp finnas som visar
@@ -35,22 +45,103 @@ export default function CheckoutPage() {
   // item_total måste vara qty multiplicerat med item_price
 
   return (
-    <main className="flex min-h-screen flex-col items-center justify-center p-24">
-      <Cart />
-      <form onSubmit={handleSubmit(onSubmit)} className="border-2">
-        <fieldset className="flex flex-col space-y-2">
-          <legend>Order</legend>
-          <input {...register("firstName")} placeholder="firstname" />
-          <input {...register("lastName")} placeholder="lastname" />
-          <input
-            type="email"
-            {...register("email")}
-            placeholder="example@example.com"
-          />
+    <Constraints>
+      <main className=" min-h-screen grid grid-cols-12 gap-4">
+        <div className="col-span-12 lg:col-span-8 border-2">
+          <div className="grid grid-cols-4 gap-4">
+            {cartItems.map((item) => (
+              <div
+                key={item.id}
+                className="border p-2 col-span-4 flex items-center justify-between"
+              >
+                <span className="space-x-4 flex items-center">
+                  <Image
+                    src={`https://www.bortakvall.se/${item.images.large}`}
+                    width={100}
+                    height={100}
+                    alt={item.name}
+                  />
+                  <p className="font-bold">{item.name}</p>
+                </span>
+                <p>{item.price} SEK</p>
+                <div className="flex border border-black">
+                  <button onClick={() => removeFromCart(item)} className="p-2">
+                    <MdOutlineRemove />
+                  </button>
+                  <p className="p-2 border border-x-black">{item.quantity}</p>
+                  <button onClick={() => addToCart(item)} className="p-2">
+                    <MdAdd />
+                  </button>
+                </div>
+                <p>{item.price * item.quantity} SEK</p>
+              </div>
+            ))}
+          </div>
+        </div>
+        <form
+          onSubmit={handleSubmit(onSubmit)}
+          className="col-span-12 lg:col-span-4 border-2 p-4"
+        >
+          <fieldset className=" flex-col space-y-2 items-center text-center [&>input]:border-2 grid grid-cols-2 gap-2">
+            <legend>Order</legend>
+            <label>
+              First name
+              <input
+                {...register("firstName")}
+                placeholder="firstname"
+                required
+                className="col-span-2 lg:col-span-1"
+              />
+            </label>
 
-          <button type="submit">Bekräfta köp</button>
-        </fieldset>
-      </form>
-    </main>
+            <input
+              {...register("lastName")}
+              placeholder="lastname"
+              required
+              className="col-span-2 lg:col-span-1"
+            />
+            <input
+              type="email"
+              {...register("email")}
+              placeholder="example@example.com"
+              className="col-span-2 "
+            />
+
+            <input
+              type="text"
+              {...register("address")}
+              required
+              placeholder="Address"
+              className="col-span-2 "
+            />
+
+            <input
+              type="text"
+              {...register("postcode")}
+              required
+              placeholder="Postcode"
+              className="col-span-1 "
+            />
+
+            <input
+              type="text"
+              {...register("city")}
+              required
+              placeholder="City"
+              className="col-span-1"
+            />
+
+            <input
+              type="tel"
+              {...register("phone")}
+              className="col-span-2 "
+              placeholder="phone"
+            />
+
+            <button type="submit">Bekräfta köp</button>
+          </fieldset>
+        </form>
+      </main>
+    </Constraints>
   );
 }

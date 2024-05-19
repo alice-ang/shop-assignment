@@ -11,6 +11,11 @@ export type Product = {
   tags: Tag[];
 };
 
+export type CartItem = Pick<
+  Product,
+  "id" | "images" | "name" | "price" | "quantity"
+>;
+
 type Tag = {
   id: number;
   name: string;
