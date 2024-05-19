@@ -20,7 +20,7 @@ export const Navigation = () => {
       <Constraints>
         <div className="flex flex-row justify-between ">
           <Link passHref href="/">
-            <h2>Logo</h2>
+            <h4 className="font-bold">🍬🍭🍫🥤🍿</h4>
           </Link>
           <SheetTrigger asChild>
             <Button variant={"ghost"}>

@@ -19,22 +19,28 @@ export type CartItem = Pick<
 export type TagProduct = Omit<Product, "description" | " quantity">;
 
 export type Order = {
-  id: number;
-  user_id: number;
-  order_date: string;
   customer_first_name: string;
   customer_last_name: string;
   customer_address: string;
   customer_postcode: string;
   customer_city: string;
   customer_email: string;
-  customer_phone: string;
+  customer_phone?: string;
   order_total: number;
   order_items: OrderItem[];
 };
-export type OrderResponse = Omit<Order, " order_items"> & {
-  updated_at: string;
+
+export type API_Response = {
+  status: string;
+  message?: string;
+  data: OrderResponse;
+};
+
+type OrderResponse = Omit<Order, " order_items"> & {
+  id: number;
+  user_id: number;
   order_date: string;
+  updated_at: string;
   created_at: string;
   items: OrderResponseItem[];
 };

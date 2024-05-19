@@ -1,5 +1,5 @@
 "use client";
-import { Cart, ProductItem } from "@/components";
+import { Cart, Constraints, ProductItem } from "@/components";
 import { getProducts } from "@/lib/api";
 import { useQuery } from "@tanstack/react-query";
 
@@ -14,12 +14,14 @@ export default function Home() {
   }
 
   return (
-    <main className=" min-h-screen p-4">
-      <div className="grid grid-cols-12  gap-2 md:gap-4">
-        {products.data.map((product) => (
-          <ProductItem product={product} key={product.id} />
-        ))}
-      </div>
+    <main className=" min-h-screen">
+      <Constraints>
+        <div className="grid grid-cols-12  gap-2 md:gap-4">
+          {products.data.map((product) => (
+            <ProductItem product={product} key={product.id} />
+          ))}
+        </div>
+      </Constraints>
     </main>
   );
 }

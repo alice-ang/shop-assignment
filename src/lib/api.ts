@@ -1,5 +1,5 @@
 import axios from "axios";
-import { Order, OrderItem, OrderResponse, Product, TagProduct } from "./types";
+import { API_Response, Order, Product, TagProduct } from "./types";
 
 const API_URL = "https://www.bortakvall.se/api/v2";
 
@@ -26,7 +26,7 @@ const post = async <Payload, Response = unknown>(
 };
 
 export const placeOrder = async (order: Order) => {
-  return post<Order, { data: OrderResponse }>("/users/46/orders", order);
+  return post<Order, API_Response>("/users/46/orders", order);
 };
 
 export const getProducts = async () => {

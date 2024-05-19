@@ -23,14 +23,14 @@ export const ProductItem: FC<ProductItemProps> = ({ product }) => {
           />
         </Link>
         {product.on_sale && (
-          <div className="absolute bg-yellow-500 right-4 top-4 px-6 py-2 border-2 border-black font-bold">
-            On sale
+          <div className="absolute bg-green-500 right-4 top-4 px-6 py-1 border-2 border-black font-bold">
+            REA
           </div>
         )}
       </div>
       <div className="">
-        <div className="p-2">
-          <h3>{product.name}</h3>
+        <div className="p-2 ">
+          <p className="font-bold text-2xl line-clamp-2">{product.name}</p>
           <p>{product.price} SEK</p>
         </div>
 

@@ -10,7 +10,6 @@ import {
   SheetFooter,
   SheetHeader,
   SheetTitle,
-  SheetTrigger,
 } from "./ui/sheet";
 import { Button } from "./ui/button";
 import Link from "next/link";
@@ -47,7 +46,7 @@ export const Cart = () => {
             />
 
             <div className=" w-full ">
-              <h3 className="font-bold">{product.name}</h3>
+              <h5 className="font-bold">{product.name}</h5>
 
               <p>{product.price} SEK</p>
 
@@ -69,7 +68,7 @@ export const Cart = () => {
       </ul>
       <SheetFooter>
         <div className="w-full ">
-          <h3 className="font-bold py-4">Totalt: {getCartTotalPrice()} SEK</h3>
+          <h4 className="font-bold py-4">Totalt: {getCartTotalPrice()} SEK</h4>
           <Button onClick={clearCart} variant="secondary" className="w-full">
             Töm varukorgen
           </Button>

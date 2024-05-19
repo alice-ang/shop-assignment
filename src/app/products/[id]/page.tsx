@@ -35,7 +35,7 @@ export default function ProductPage() {
         </div>
       </div>
       <div className="col-span-12 lg:col-span-6 space-y-4">
-        <h2>{product.data.name}</h2>
+        <h2 className="font-bold">{product.data.name}</h2>
         <h4>{product.data.price} SEK</h4>
         <h5>
           <span className="font-semibold">{product.data.stock_quantity}</span>
