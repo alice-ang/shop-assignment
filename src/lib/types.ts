@@ -30,18 +30,25 @@ export type Order = {
   customer_email: string;
   customer_phone: string;
   order_total: number;
-  created_at: string;
+  order_items: OrderItem[];
+};
+export type OrderResponse = Omit<Order, " order_items"> & {
   updated_at: string;
-  items: OrderItem[];
+  order_date: string;
+  created_at: string;
+  items: OrderResponseItem[];
 };
 
 export type OrderItem = {
-  id: number;
-  order_id: number;
   product_id: number;
   qty: number;
   item_price: number;
   item_total: number;
+};
+
+export type OrderResponseItem = OrderItem & {
+  id: number;
+  order_id: number;
 };
 
 type Tag = {

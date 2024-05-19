@@ -5,26 +5,42 @@ import { useForm, SubmitHandler } from "react-hook-form";
 
 import { MdAdd, MdOutlineRemove } from "react-icons/md";
 import Image from "next/image";
-
-type CheckoutValues = {
-  firstName: string;
-  lastName: string;
-  email: string;
-  address: string;
-  postcode: string;
-  city: string;
-  phone?: string;
-};
+import { Order } from "@/lib/types";
+import { useMutation } from "@tanstack/react-query";
+import { placeOrder } from "@/lib/api";
 
 export default function CheckoutPage() {
-  const { cartItems, removeFromCart, addToCart } = useCart();
-
+  const { cartItems, removeFromCart, addToCart, getCartTotalPrice, clearCart } =
+    useCart();
+  const mutation = useMutation({
+    mutationFn: (newOrder: Order) => placeOrder(newOrder),
+    onSuccess: (res) => {
+      console.log(res.data.id);
+      clearCart();
+      reset();
+    },
+  });
   const {
+    reset,
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<CheckoutValues>();
-  const onSubmit: SubmitHandler<CheckoutValues> = (data) => console.log(data);
+  } = useForm<Order>();
+
+  const onSubmit: SubmitHandler<Order> = (data) => {
+    const orderItems = cartItems.map((item) => ({
+      product_id: item.id,
+      qty: item.quantity,
+      item_price: item.price,
+      item_total: item.price * item.quantity,
+    }));
+
+    mutation.mutate({
+      ...data,
+      order_items: orderItems,
+      order_total: getCartTotalPrice(),
+    });
+  };
 
   // I varukorgen ska en “Gå till kassan”-knapp finnas som visar
   //en ny vy där man får fylla i namn, adress, postnr, ort, telefon (ska ej vara required) och e-post.
@@ -86,28 +102,28 @@ export default function CheckoutPage() {
             <legend>Leverensinformation</legend>
 
             <input
-              {...register("firstName")}
+              {...register("customer_first_name")}
               placeholder="firstname"
               required
               className="col-span-2 lg:col-span-1"
             />
 
             <input
-              {...register("lastName")}
+              {...register("customer_last_name")}
               placeholder="lastname"
               required
               className="col-span-2 lg:col-span-1"
             />
             <input
               type="email"
-              {...register("email")}
+              {...register("customer_email")}
               placeholder="example@example.com"
               className="col-span-2 "
             />
 
             <input
               type="text"
-              {...register("address")}
+              {...register("customer_address")}
               required
               placeholder="Address"
               className="col-span-2 "
@@ -115,7 +131,7 @@ export default function CheckoutPage() {
 
             <input
               type="text"
-              {...register("postcode")}
+              {...register("customer_postcode")}
               required
               placeholder="Postcode"
               className="col-span-1 "
@@ -123,7 +139,7 @@ export default function CheckoutPage() {
 
             <input
               type="text"
-              {...register("city")}
+              {...register("customer_city")}
               required
               placeholder="City"
               className="col-span-1"
@@ -131,12 +147,13 @@ export default function CheckoutPage() {
 
             <input
               type="tel"
-              {...register("phone")}
+              {...register("customer_phone")}
               className="col-span-2 "
               placeholder="phone"
             />
 
             <button type="submit">Bekräfta köp</button>
+            {mutation.isSuccess ? <div>Order added!</div> : null}
           </fieldset>
         </form>
       </main>
