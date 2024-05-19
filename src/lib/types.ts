@@ -57,7 +57,7 @@ export type OrderResponseItem = OrderItem & {
   order_id: number;
 };
 
-type Tag = {
+export type Tag = {
   id: number;
   name: string;
   slug: string;

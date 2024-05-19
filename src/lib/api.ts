@@ -1,5 +1,5 @@
 import axios from "axios";
-import { API_Response, Order, Product, TagProduct } from "./types";
+import { API_Response, Order, Product, Tag, TagProduct } from "./types";
 
 const API_URL = "https://www.bortakvall.se/api/v2";
 
@@ -33,10 +33,21 @@ export const getProducts = async () => {
   return get<{ data: Product[] }>("/products");
 };
 
+export const getAllTags = async () => {
+  return get<{ data: Tag[] }>("/tags");
+};
+
 export const getProductById = async (id: string) => {
   return get<{ data: Product }>(`/products/${id}`);
 };
 
 export const getProductsByTag = async (tagId: string) => {
-  return get<{ data: TagProduct[] }>(`/tags/${tagId}`);
+  return get<{
+    status: string;
+    data: {
+      id: number;
+      name: string;
+      products: TagProduct[];
+    };
+  }>(`/tags/${tagId}`);
 };

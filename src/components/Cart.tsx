@@ -68,7 +68,7 @@ export const Cart = () => {
       </ul>
       <SheetFooter>
         <div className="w-full ">
-          <h4 className="font-bold py-4">Totalt: {getCartTotalPrice()} SEK</h4>
+          <h5 className="font-bold py-4">Totalt: {getCartTotalPrice()} SEK</h5>
           <Button onClick={clearCart} variant="secondary" className="w-full">
             Töm varukorgen
           </Button>

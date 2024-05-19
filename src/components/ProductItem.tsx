@@ -1,4 +1,4 @@
-import { Product } from "@/lib/types";
+import { Product, TagProduct } from "@/lib/types";
 import React, { FC } from "react";
 import Image from "next/image";
 import { useCart } from "@/lib/providers/CartProvider";
@@ -6,7 +6,7 @@ import Link from "next/link";
 import { Button } from "./ui/button";
 
 type ProductItemProps = {
-  product: Product;
+  product: Product | TagProduct;
 };
 
 export const ProductItem: FC<ProductItemProps> = ({ product }) => {

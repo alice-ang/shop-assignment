@@ -18,6 +18,7 @@ import { Order } from "@/lib/types";
 import { useMutation } from "@tanstack/react-query";
 import { toast } from "@/components/ui/use-toast";
 import { useRouter } from "next/navigation";
+import { Button } from "./ui/button";
 
 const formSchema = z.object({
   customer_first_name: z.string().min(1).max(255),
@@ -35,15 +36,17 @@ export const CheckoutForm = () => {
 
   const mutation = useMutation({
     mutationFn: (newOrder: Order) => placeOrder(newOrder),
-    onError: (error) => {
-      toast({
-        variant: "destructive",
-        title: error.message,
-      });
-    },
-    onSuccess: (res) => {
-      clearCart();
-      router.push(`/checkout/${res.data.id}`);
+    onSettled(data) {
+      console.log(data);
+      if (data?.status === "success") {
+        clearCart();
+        router.push(`/checkout/${data.data.id}`);
+      } else {
+        toast({
+          variant: "destructive",
+          title: data?.message,
+        });
+      }
     },
   });
 
@@ -193,9 +196,9 @@ export const CheckoutForm = () => {
           />
         </div>
 
-        <button type="submit" className="w-full col-span-6">
+        <Button type="submit" className="w-full col-span-6">
           Bekräfta order
-        </button>
+        </Button>
       </form>
     </Form>
   );
