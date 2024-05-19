@@ -7,6 +7,7 @@ import Markdown from "react-markdown";
 import rehypeRaw from "rehype-raw";
 import Image from "next/image";
 import { useCart } from "@/lib/providers/CartProvider";
+import { Button } from "@/components/ui/button";
 
 export default function ProductPage() {
   const params = useParams<{ id: string }>();
@@ -33,15 +34,19 @@ export default function ProductPage() {
           />
         </div>
       </div>
-      <div className="col-span-12 lg:col-span-6 prose">
-        <h1>{product.data.name}</h1>
-        <h3>{product.data.price} SEK</h3>
-        <button
-          className=" py-4 border-2 border-black w-full"
+      <div className="col-span-12 lg:col-span-6 space-y-4">
+        <h2>{product.data.name}</h2>
+        <h4>{product.data.price} SEK</h4>
+        <h5>
+          <span className="font-semibold">{product.data.stock_quantity}</span>
+          st i lager
+        </h5>
+        <Button
+          className="w-full"
           onClick={() => addToCart({ ...product.data })}
         >
           Lägg till i varukorgen
-        </button>
+        </Button>
 
         <Markdown rehypePlugins={[rehypeRaw]}>
           {product.data.description}

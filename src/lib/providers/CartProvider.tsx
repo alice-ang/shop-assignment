@@ -6,7 +6,8 @@ import {
   PropsWithChildren,
   useContext,
 } from "react";
-import { CartItem, Product } from "../types";
+import { CartItem } from "../types";
+import { toast } from "@/components/ui/use-toast";
 
 type CartData = {
   cartItems: CartItem[];
@@ -45,14 +46,26 @@ export default function CartProvider({ children }: PropsWithChildren) {
               : cartItem
           )
         );
+
+        toast({
+          variant: "success",
+          title: `Lagt till ${item.name} i varukorgen.`,
+        });
       } else {
-        alert("Cannot add more items. Stock limit reached.");
+        toast({
+          variant: "destructive",
+          title:
+            " Kan inte lägga till fler produkter. Lagersaldo otillräckligt.",
+        });
       }
     } else {
       if (item.stock_quantity > 0) {
         setCartItems([...cartItems, { ...item, quantity: 1 }]);
       } else {
-        alert("Item is out of stock.");
+        toast({
+          variant: "destructive",
+          title: "Lagersaldo otillräckligt.",
+        });
       }
     }
   };

@@ -1,24 +1,36 @@
 "use client";
-import React from "react";
+import React, { useCallback, useEffect, useMemo, useState } from "react";
 import { Constraints } from "./Constraints";
 import { useCart } from "@/lib/providers/CartProvider";
+import { SheetTrigger } from "./ui/sheet";
+import { Button } from "./ui/button";
+import { FaShoppingCart } from "react-icons/fa";
+import Link from "next/link";
 
 export const Navigation = () => {
+  const [numOfItems, setNumOfItems] = useState(0);
   const { getCartTotalItems } = useCart();
+
+  useEffect(() => {
+    setNumOfItems(getCartTotalItems());
+  }, [getCartTotalItems]);
+
   return (
-    <Constraints>
-      <nav className="flex flex-row justify-between">
-        <h2>Logo</h2>
-        <button
-          className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800"
-          type="button"
-          data-drawer-target="drawer-example"
-          data-drawer-show="drawer-example"
-          aria-controls="drawer-example"
-        >
-          {getCartTotalItems()}
-        </button>
-      </nav>
-    </Constraints>
+    <nav className="sticky top-0 z-20 bg-background">
+      <Constraints>
+        <div className="flex flex-row justify-between ">
+          <Link passHref href="/">
+            <h2>Logo</h2>
+          </Link>
+          <SheetTrigger asChild>
+            <Button variant={"ghost"}>
+              <FaShoppingCart size={28} />
+
+              <span>{`( ${numOfItems} )`}</span>
+            </Button>
+          </SheetTrigger>
+        </div>
+      </Constraints>
+    </nav>
   );
 };

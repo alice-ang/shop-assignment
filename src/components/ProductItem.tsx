@@ -3,6 +3,7 @@ import React, { FC } from "react";
 import Image from "next/image";
 import { useCart } from "@/lib/providers/CartProvider";
 import Link from "next/link";
+import { Button } from "./ui/button";
 
 type ProductItemProps = {
   product: Product;
@@ -27,18 +28,19 @@ export const ProductItem: FC<ProductItemProps> = ({ product }) => {
           </div>
         )}
       </div>
-      <div className="prose">
-        <div className="p-2 ">
+      <div className="">
+        <div className="p-2">
           <h3>{product.name}</h3>
           <p>{product.price} SEK</p>
         </div>
 
-        <button
+        <Button
           onClick={() => addToCart(product)}
-          className=" py-4 border-t-2 border-black w-full h-fit"
+          className="w-full"
+          variant="secondary"
         >
           Lägg till i varukorgen
-        </button>
+        </Button>
       </div>
     </div>
   );

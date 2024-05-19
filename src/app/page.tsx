@@ -15,7 +15,6 @@ export default function Home() {
 
   return (
     <main className=" min-h-screen p-4">
-      <Cart />
       <div className="grid grid-cols-12  gap-2 md:gap-4">
         {products.data.map((product) => (
           <ProductItem product={product} key={product.id} />

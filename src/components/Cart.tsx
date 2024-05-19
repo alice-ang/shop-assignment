@@ -1,8 +1,19 @@
 "use client";
-import React, { ReactNode } from "react";
+import React from "react";
 import { useCart } from "@/lib/providers/CartProvider";
-import { MdAdd, MdOutlineRemove } from "react-icons/md";
 import Image from "next/image";
+import {
+  Sheet,
+  SheetClose,
+  SheetContent,
+  SheetDescription,
+  SheetFooter,
+  SheetHeader,
+  SheetTitle,
+  SheetTrigger,
+} from "./ui/sheet";
+import { Button } from "./ui/button";
+import Link from "next/link";
 
 export const Cart = () => {
   const {
@@ -15,80 +26,65 @@ export const Cart = () => {
   } = useCart();
 
   return (
-    <ul className="border-2 border-red-500">
-      {cartItems.map((product) => (
-        <li
-          className="flex flex-row-items-end justify-start border-b-2 border-black"
-          key={product.id}
-        >
-          <Image
-            src={`https://www.bortakvall.se/${product.images.large}`}
-            width={100}
-            height={100}
-            alt={product.name}
-          />
+    <SheetContent className="w-full overflow-y-scroll">
+      <SheetHeader>
+        <SheetTitle>Varukorgen</SheetTitle>
+        <SheetDescription>
+          {getCartTotalItems()} st produkter i varukorgen
+        </SheetDescription>
+      </SheetHeader>
+      <ul className="">
+        {cartItems.map((product) => (
+          <li
+            className="flex flex-row-items-end justify-start border-b-2 border-black gap-4 py-2"
+            key={product.id}
+          >
+            <Image
+              src={`https://www.bortakvall.se/${product.images.large}`}
+              width={100}
+              height={100}
+              alt={product.name}
+            />
 
-          <div className="prose w-full  ">
-            <h3>{product.name}</h3>
-            <div className="border flex w-fit">
-              <button onClick={() => removeFromCart(product)}>-</button>
-              <p>{product.quantity}</p>
-              <button onClick={() => addToCart(product)}>+</button>
+            <div className=" w-full ">
+              <h3 className="font-bold">{product.name}</h3>
+
+              <p>{product.price} SEK</p>
+
+              <div className="border flex w-fit">
+                <Button onClick={() => removeFromCart(product)} variant="ghost">
+                  -
+                </Button>
+                <Button variant="ghost">{product.quantity}</Button>
+                <Button onClick={() => addToCart(product)} variant="ghost">
+                  +
+                </Button>
+              </div>
+              <p className="font-semibold">
+                Totalt: {product.price * product.quantity} SEK
+              </p>
             </div>
-            <div>
-              <p>Price: {product.price} SEK</p>
-            </div>
-          </div>
-        </li>
-      ))}
-    </ul>
-    // <div classNameName="drawer drawer-end">
-    //   <input id="cart-drawer" type="checkbox" classNameName="drawer-toggle" />
-    //   <div classNameName="drawer-content">{children}</div>
-    //   <div classNameName="drawer-side">
-    //     <label
-    //       htmlFor="cart-drawer"
-    //       aria-label="close sidebar"
-    //       classNameName="drawer-overlay"
-    //     ></label>
-    //     <ul classNameName="menu p-4 w-full md:w-1/2 xl:w-1/3 min-h-full bg-base-200 text-base-content ">
-    //       <h2>Varukorgen</h2>
-    //       <p>{getCartTotalItems()} produkter i varukorgen</p>
-    //       {cartItems.map((product) => (
-    //         <li
-    //           classNameName="flex flex-row-items-end justify-between"
-    //           key={product.id}
-    //         >
-    //           <div classNameName="flex space-x-4">
-    //             <Image
-    //               src={`https://www.bortakvall.se/${product.images.large}`}
-    //               width={100}
-    //               height={100}
-    //               alt={product.name}
-    //             />
-    //             <h4>{product.name}</h4>
-    //           </div>
-    //           <div classNameName="border flex">
-    //             <button onClick={() => removeFromCart(product)}>
-    //               <MdOutlineRemove />
-    //             </button>
-    //             <p>{product.quantity}</p>
-    //             <button onClick={() => addToCart(product)}>
-    //               <MdAdd />
-    //             </button>
-    //           </div>
-    //           <div>
-    //             <p>Price: {product.price} SEK</p>
-    //           </div>
-    //         </li>
-    //       ))}
-    //       <li classNameName="bg-red-100">Totalt: {getCartTotalPrice()} SEK</li>
-    //       <li>
-    //         <Link href={"/checkout"}> Gå till kassan</Link>
-    //       </li>
-    //     </ul>
-    //   </div>
-    // </div>
+          </li>
+        ))}
+      </ul>
+      <SheetFooter>
+        <div className="w-full ">
+          <h3 className="font-bold py-4">Totalt: {getCartTotalPrice()} SEK</h3>
+          <Button onClick={clearCart} variant="secondary" className="w-full">
+            Töm varukorgen
+          </Button>
+        </div>
+        <div>
+          <SheetClose asChild>
+            <Link href="/checkout" passHref className="w-full">
+              <Button type="submit" className="w-full">
+                Gå till kassan
+              </Button>
+            </Link>
+          </SheetClose>
+        </div>
+      </SheetFooter>
+    </SheetContent>
   );
 };
 
