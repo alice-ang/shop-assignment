@@ -1,5 +1,5 @@
 "use client";
-import { Cart, Constraints } from "@/components";
+import { Constraints } from "@/components";
 import { useCart } from "@/lib/providers/CartProvider";
 import { useForm, SubmitHandler } from "react-hook-form";
 

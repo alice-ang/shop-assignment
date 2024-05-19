@@ -3,7 +3,6 @@ import React, { ReactNode } from "react";
 import { useCart } from "@/lib/providers/CartProvider";
 import { MdAdd, MdOutlineRemove } from "react-icons/md";
 import Image from "next/image";
-import Link from "next/link";
 
 export const Cart = () => {
   const {
@@ -16,36 +15,33 @@ export const Cart = () => {
   } = useCart();
 
   return (
-    <div>
+    <ul className="border-2 border-red-500">
       {cartItems.map((product) => (
         <li
-          className="flex flex-row-items-end justify-between"
+          className="flex flex-row-items-end justify-start border-b-2 border-black"
           key={product.id}
         >
-          <div className="flex space-x-4">
-            <Image
-              src={`https://www.bortakvall.se/${product.images.large}`}
-              width={100}
-              height={100}
-              alt={product.name}
-            />
-            <h4>{product.name}</h4>
-          </div>
-          <div className="border flex">
-            <button onClick={() => removeFromCart(product)}>
-              <MdOutlineRemove />
-            </button>
-            <p>{product.quantity}</p>
-            <button onClick={() => addToCart(product)}>
-              <MdAdd />
-            </button>
-          </div>
-          <div>
-            <p>Price: {product.price} SEK</p>
+          <Image
+            src={`https://www.bortakvall.se/${product.images.large}`}
+            width={100}
+            height={100}
+            alt={product.name}
+          />
+
+          <div className="prose w-full  ">
+            <h3>{product.name}</h3>
+            <div className="border flex w-fit">
+              <button onClick={() => removeFromCart(product)}>-</button>
+              <p>{product.quantity}</p>
+              <button onClick={() => addToCart(product)}>+</button>
+            </div>
+            <div>
+              <p>Price: {product.price} SEK</p>
+            </div>
           </div>
         </li>
       ))}
-    </div>
+    </ul>
     // <div classNameName="drawer drawer-end">
     //   <input id="cart-drawer" type="checkbox" classNameName="drawer-toggle" />
     //   <div classNameName="drawer-content">{children}</div>

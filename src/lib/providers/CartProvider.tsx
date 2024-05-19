@@ -33,26 +33,27 @@ export default function CartProvider({ children }: PropsWithChildren) {
       : []
   );
 
-  /**
-   * Adds an item to the cart.
-   * If the item is already in the cart, it increases the quantity by 1.
-   * If the item is not in the cart, it adds the item with a quantity of 1.
-   *
-   * @param item - The item to be added to the cart.
-   */
   const addToCart = (item: CartItem) => {
     const isItemInCart = cartItems.find((cartItem) => cartItem.id === item.id);
 
     if (isItemInCart) {
-      setCartItems(
-        cartItems.map((cartItem) =>
-          cartItem.id === item.id
-            ? { ...cartItem, quantity: cartItem.quantity + 1 }
-            : cartItem
-        )
-      );
+      if (isItemInCart.quantity < isItemInCart.stock_quantity) {
+        setCartItems(
+          cartItems.map((cartItem) =>
+            cartItem.id === item.id
+              ? { ...cartItem, quantity: cartItem.quantity + 1 }
+              : cartItem
+          )
+        );
+      } else {
+        alert("Cannot add more items. Stock limit reached.");
+      }
     } else {
-      setCartItems([...cartItems, { ...item, quantity: 1 }]);
+      if (item.stock_quantity > 0) {
+        setCartItems([...cartItems, { ...item, quantity: 1 }]);
+      } else {
+        alert("Item is out of stock.");
+      }
     }
   };
 
