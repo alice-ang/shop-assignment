@@ -57,10 +57,14 @@ export default function ProductPage() {
         <div className="col-span-12 lg:col-span-6 space-y-4">
           <h2 className="font-bold">{product.data.name}</h2>
           <h4>{product.data.price} SEK</h4>
-          <p>
-            <span className="font-semibold">{product.data.stock_quantity}</span>
-            st i lager
-          </p>
+          {product.data.stock_quantity && (
+            <p>
+              <span className="font-semibold">
+                {product.data.stock_quantity}
+              </span>
+              st i lager
+            </p>
+          )}
 
           <Button
             className="w-full"
