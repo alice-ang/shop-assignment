@@ -3,6 +3,8 @@ import React from "react";
 import { useParams } from "next/navigation";
 import dynamic from "next/dynamic";
 import { useWindowSize } from "@uidotdev/usehooks";
+import Link from "next/link";
+import { Button } from "@/components/ui/button";
 
 const Confetti = dynamic(() => import("react-confetti"), {
   ssr: false,
@@ -18,6 +20,11 @@ export default function CheckoutConfirmationPage() {
         <p>
           Ditt ordernummer är: <span className="font-bold">{params.id}</span>
         </p>
+        <Button asChild variant={"link"}>
+          <Link href={"/"} passHref>
+            Fortsätt handla 💸
+          </Link>
+        </Button>
       </div>
       <Confetti width={width ?? 0} height={height ?? 0} recycle={false} />
     </>
