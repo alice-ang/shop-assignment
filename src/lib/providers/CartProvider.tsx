@@ -46,11 +46,6 @@ export default function CartProvider({ children }: PropsWithChildren) {
               : cartItem
           )
         );
-
-        toast({
-          variant: "success",
-          title: `Lagt till ${item.name} i varukorgen.`,
-        });
       } else {
         toast({
           variant: "destructive",
@@ -61,6 +56,11 @@ export default function CartProvider({ children }: PropsWithChildren) {
     } else {
       if (item.stock_quantity > 0) {
         setCartItems([...cartItems, { ...item, quantity: 1 }]);
+
+        toast({
+          variant: "success",
+          title: `Lagt till ${item.name} i varukorgen.`,
+        });
       } else {
         toast({
           variant: "destructive",

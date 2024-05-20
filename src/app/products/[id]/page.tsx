@@ -30,7 +30,7 @@ export default function ProductPage() {
     <Constraints>
       <main className=" min-h-screen grid grid-cols-12 gap-4 p-4 ">
         <div className="col-span-12 lg:col-span-6">
-          <div className="aspect-square relative h-full w-full">
+          <div className="aspect-square relative h-full w-full ">
             <Image
               src={`https://www.bortakvall.se/${product.data.images.large}`}
               alt={product.data.name}
