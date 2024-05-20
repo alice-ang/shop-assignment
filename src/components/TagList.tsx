@@ -17,6 +17,7 @@ export const TagList: FC<TagListProps> = ({ tags, handleClick, activeTag }) => {
           variant={activeTag === tag.id.toString() ? "default" : "secondary"}
           className="cursor-pointer"
           onClick={() => handleClick(tag)}
+          key={tag.id}
         >
           {tag.name}
         </Badge>

@@ -35,8 +35,23 @@ export default function ProductPage() {
               src={`https://www.bortakvall.se/${product.data.images.large}`}
               alt={product.data.name}
               fill
-              className="aspect-square object-contain bg-center"
+              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+              className="aspect-square object-contain bg-contain"
             />
+
+            <div className="flex flex-col space-y-2 absolute left-4 top-4 ">
+              {product.data.on_sale && (
+                <div className=" bg-green-500 px-6 py-1 border-2 border-black font-bold w-fit">
+                  REA
+                </div>
+              )}
+
+              {product.data.stock_status === "outofstock" && (
+                <div className=" bg-red-500 px-6 py-1 border-2 border-black font-bold">
+                  Slut i lager
+                </div>
+              )}
+            </div>
           </div>
         </div>
         <div className="col-span-12 lg:col-span-6 space-y-4">
