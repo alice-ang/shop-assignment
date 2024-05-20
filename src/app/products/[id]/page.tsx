@@ -55,7 +55,7 @@ export default function ProductPage() {
 
           <TagList
             tags={product.data.tags}
-            handleClick={(tag) => router.push(`/tag?search=${tag.id}`)}
+            handleClick={(tag) => router.push(`/?search=${tag.id}`)}
           />
           <Markdown rehypePlugins={[rehypeRaw]}>
             {product.data.description}
