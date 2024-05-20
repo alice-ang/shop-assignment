@@ -1,3 +1,4 @@
+"use client";
 import {
   createContext,
   useState,
@@ -5,62 +6,97 @@ import {
   PropsWithChildren,
   useContext,
 } from "react";
-import { Product } from "../types";
+import { CartItem } from "../types";
+import { toast } from "@/components/ui/use-toast";
 
 type CartData = {
-  cartItems: Product[];
-
-  addToCart: (newItem: Product) => void;
-  removeFromCart: (item: Product) => void;
+  cartItems: CartItem[];
+  addToCart: (cartItem: CartItem) => void;
+  removeFromCart: (cartItem: CartItem) => void;
   clearCart: () => void;
-  getCartTotal: () => number;
-  decrease: (id: number) => void;
-  increase: (id: number) => void;
+  getCartTotalPrice: () => number;
+  getCartTotalItems: () => number;
 };
 
-const CartContext = createContext<CartData>({
+export const CartContext = createContext<CartData>({
   cartItems: [],
   addToCart: () => {},
   removeFromCart: () => {},
   clearCart: () => {},
-  getCartTotal: () => 0,
-  decrease: () => {},
-  increase: () => {},
+  getCartTotalPrice: () => 0,
+  getCartTotalItems: () => 0,
 });
 
 export default function CartProvider({ children }: PropsWithChildren) {
-  const [cartItems, setCartItems] = useState<Product[]>(
-    localStorage.getItem("cartItems")
+  const [cartItems, setCartItems] = useState<CartItem[]>(
+    typeof window !== "undefined" && localStorage.getItem("cartItems")
       ? JSON.parse(localStorage.getItem("cartItems") as string)
       : []
   );
 
-  const addToCart = (item: Product) => {
+  /**
+   * Adds an item to the cart.
+   *  If the item is already in the cart, the quantity will be increased by 1.
+   *  If the item is not in the cart, it will be added with a quantity of 1.
+   *  If the item is out of stock, a toast message will be shown.
+   *
+   * @param item - The item to be added to the cart.
+   */
+
+  const addToCart = (item: CartItem) => {
     const isItemInCart = cartItems.find((cartItem) => cartItem.id === item.id);
 
     if (isItemInCart) {
-      setCartItems(
-        cartItems.map((cartItem) =>
-          cartItem.id === item.id
-            ? { ...cartItem, quantity: cartItem.stock_quantity + 1 }
-            : cartItem
-        )
-      );
+      if (isItemInCart.quantity < isItemInCart.stock_quantity) {
+        setCartItems(
+          cartItems.map((cartItem) =>
+            cartItem.id === item.id
+              ? { ...cartItem, quantity: cartItem.quantity + 1 }
+              : cartItem
+          )
+        );
+      } else {
+        toast({
+          variant: "destructive",
+          title:
+            " Kan inte lägga till fler produkter. Lagersaldo otillräckligt.",
+        });
+      }
     } else {
-      setCartItems([...cartItems, { ...item, stock_quantity: 1 }]);
+      if (item.stock_quantity > 0) {
+        setCartItems([...cartItems, { ...item, quantity: 1 }]);
+
+        toast({
+          variant: "success",
+          title: `Lagt till ${item.name} i varukorgen.`,
+        });
+      } else {
+        toast({
+          variant: "destructive",
+          title: "Lagersaldo otillräckligt.",
+        });
+      }
     }
   };
 
-  const removeFromCart = (item: Product) => {
+  /**
+   * Removes an item from the cart.
+   * If the item's quantity is 1, it will be completely removed from the cart.
+   * If the item's quantity is greater than 1, the quantity will be decreased by 1.
+   *
+   * @param item - The item to be removed from the cart.
+   */
+
+  const removeFromCart = (item: CartItem) => {
     const isItemInCart = cartItems.find((cartItem) => cartItem.id === item.id);
 
-    if (isItemInCart?.stock_quantity === 1) {
+    if (isItemInCart?.quantity === 1) {
       setCartItems(cartItems.filter((cartItem) => cartItem.id !== item.id));
     } else {
       setCartItems(
         cartItems.map((cartItem) =>
           cartItem.id === item.id
-            ? { ...cartItem, quantity: cartItem.stock_quantity - 1 }
+            ? { ...cartItem, quantity: cartItem.quantity - 1 }
             : cartItem
         )
       );
@@ -71,34 +107,17 @@ export default function CartProvider({ children }: PropsWithChildren) {
     setCartItems([]);
   };
 
-  const getCartTotal = () => {
+  const getCartTotalPrice = () => {
     return cartItems.reduce(
-      (total, item) => total + item.price * item.stock_quantity,
+      (total, item) => total + item.price * item.quantity,
       0
     );
   };
 
-  const increase = (id: number) => {
-    setCartItems(
-      cartItems.map((cartItem) =>
-        cartItem.id === id
-          ? { ...cartItem, count: cartItem.stock_quantity + 1 }
-          : cartItem
-      )
-    );
-  };
-
-  const decrease = (id: number) => {
-    setCartItems(
-      cartItems.map((cartItem) =>
-        cartItem.id === id
-          ? {
-              ...cartItem,
-              count:
-                cartItem.stock_quantity > 1 ? cartItem.stock_quantity - 1 : 1,
-            }
-          : cartItem
-      )
+  const getCartTotalItems = () => {
+    return cartItems.reduce(
+      (total, item) => (total = total + item.quantity),
+      0
     );
   };
 
@@ -120,9 +139,8 @@ export default function CartProvider({ children }: PropsWithChildren) {
         addToCart,
         removeFromCart,
         clearCart,
-        getCartTotal,
-        increase,
-        decrease,
+        getCartTotalPrice,
+        getCartTotalItems,
       }}
     >
       {children}

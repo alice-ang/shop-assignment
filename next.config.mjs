@@ -1,7 +1,13 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   images: {
-    domains: ["www.bortakvall.se"],
+    remotePatterns: [
+      {
+        protocol: "https",
+        hostname: "www.bortakvall.se",
+        port: "",
+      },
+    ],
   },
 };
 
