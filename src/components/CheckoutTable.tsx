@@ -12,6 +12,7 @@ import {
 } from "./ui/table";
 import { useCart } from "@/lib/providers/CartProvider";
 import Image from "next/image";
+import { QuantityButtons } from "./QuantityButtons";
 
 export const CheckoutTable = () => {
   const [numOfItems, setNumOfItems] = useState(0);
@@ -31,7 +32,7 @@ export const CheckoutTable = () => {
     <Table>
       <TableHeader>
         <TableRow>
-          <TableHead>Produkt ({`${numOfItems}`})</TableHead>
+          <TableHead>Produkt ({`(${numOfItems}`})</TableHead>
           <TableHead>Pris</TableHead>
           <TableHead>Antal</TableHead>
           <TableHead className="text-right">Summa</TableHead>
@@ -51,15 +52,7 @@ export const CheckoutTable = () => {
             </TableCell>
             <TableCell>{item.price} SEK</TableCell>
             <TableCell>
-              <div className="border flex w-fit">
-                <Button onClick={() => removeFromCart(item)} variant="ghost">
-                  -
-                </Button>
-                <Button variant="ghost">{item.quantity}</Button>
-                <Button onClick={() => addToCart(item)} variant="ghost">
-                  +
-                </Button>
-              </div>
+              <QuantityButtons product={item} />
             </TableCell>
             <TableCell className="text-right">
               {item.quantity * item.price} SEK

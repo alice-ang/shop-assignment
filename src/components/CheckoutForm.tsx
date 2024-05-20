@@ -36,8 +36,15 @@ export const CheckoutForm = () => {
 
   const mutation = useMutation({
     mutationFn: (newOrder: Order) => placeOrder(newOrder),
+    /**
+     * Callback function called when the payment is settled.
+     * If the order status is "success", it clears the cart and redirects to the checkout page.
+     * If the order status is not "success", it displays a toast message with the error message.
+     *
+     * @param {object} data - The order data object.
+     */
+
     onSettled(data) {
-      console.log(data);
       if (data?.status === "success") {
         clearCart();
         router.push(`/checkout/${data.data.id}`);

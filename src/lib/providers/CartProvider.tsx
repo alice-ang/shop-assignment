@@ -34,6 +34,15 @@ export default function CartProvider({ children }: PropsWithChildren) {
       : []
   );
 
+  /**
+   * Adds an item to the cart.
+   *  If the item is already in the cart, the quantity will be increased by 1.
+   *  If the item is not in the cart, it will be added with a quantity of 1.
+   *  If the item is out of stock, a toast message will be shown.
+   *
+   * @param item - The item to be added to the cart.
+   */
+
   const addToCart = (item: CartItem) => {
     const isItemInCart = cartItems.find((cartItem) => cartItem.id === item.id);
 
@@ -72,8 +81,8 @@ export default function CartProvider({ children }: PropsWithChildren) {
 
   /**
    * Removes an item from the cart.
-   * If the item quantity is 1, it removes the item from the cart.
-   * If the item quantity is greater than 1, it decreases the quantity by 1.
+   * If the item's quantity is 1, it will be completely removed from the cart.
+   * If the item's quantity is greater than 1, the quantity will be decreased by 1.
    *
    * @param item - The item to be removed from the cart.
    */

@@ -1,6 +1,5 @@
 "use client";
 import { Constraints, ProductItem, TagList } from "@/components";
-import { Badge } from "@/components/ui/badge";
 import { getAllTags, getProducts, getProductsByTag } from "@/lib/api";
 import { useQuery } from "@tanstack/react-query";
 import { useRouter, useSearchParams } from "next/navigation";

@@ -3,7 +3,6 @@ import React from "react";
 import { useCart } from "@/lib/providers/CartProvider";
 import Image from "next/image";
 import {
-  Sheet,
   SheetClose,
   SheetContent,
   SheetDescription,
@@ -13,16 +12,11 @@ import {
 } from "./ui/sheet";
 import { Button } from "./ui/button";
 import Link from "next/link";
+import { QuantityButtons } from "./QuantityButtons";
 
 export const Cart = () => {
-  const {
-    cartItems,
-    removeFromCart,
-    addToCart,
-    clearCart,
-    getCartTotalPrice,
-    getCartTotalItems,
-  } = useCart();
+  const { cartItems, clearCart, getCartTotalPrice, getCartTotalItems } =
+    useCart();
 
   return (
     <SheetContent className="w-full overflow-y-scroll">
@@ -50,15 +44,7 @@ export const Cart = () => {
 
               <p>{product.price} SEK</p>
 
-              <div className="border flex w-fit">
-                <Button onClick={() => removeFromCart(product)} variant="ghost">
-                  -
-                </Button>
-                <Button variant="ghost">{product.quantity}</Button>
-                <Button onClick={() => addToCart(product)} variant="ghost">
-                  +
-                </Button>
-              </div>
+              <QuantityButtons product={product} />
               <p className="font-semibold">
                 Totalt: {product.price * product.quantity} SEK
               </p>
