@@ -86,7 +86,7 @@ export const CheckoutForm = () => {
         onSubmit={form.handleSubmit(onSubmit)}
         className="grid grid-cols-6 gap-2"
       >
-        <div className="col-span-6">
+        <div className="col-span-6 md:col-span-3">
           <FormField
             control={form.control}
             name="customer_first_name"
@@ -94,14 +94,14 @@ export const CheckoutForm = () => {
               <FormItem>
                 <FormLabel>Förnamn</FormLabel>
                 <FormControl>
-                  <Input placeholder="Förnamn" {...field} />
+                  <Input placeholder="Lars" {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
             )}
           />
         </div>
-        <div className="col-span-6">
+        <div className="col-span-6 md:col-span-3">
           <FormField
             control={form.control}
             name="customer_last_name"
@@ -109,7 +109,7 @@ export const CheckoutForm = () => {
               <FormItem>
                 <FormLabel>Eftermamn</FormLabel>
                 <FormControl>
-                  <Input placeholder="Efternamn" {...field} />
+                  <Input placeholder="Larsson" {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -124,7 +124,7 @@ export const CheckoutForm = () => {
               <FormItem>
                 <FormLabel>Adress</FormLabel>
                 <FormControl>
-                  <Input placeholder="Adress" {...field} />
+                  <Input placeholder="Stora gatan 12" {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -139,7 +139,7 @@ export const CheckoutForm = () => {
               <FormItem>
                 <FormLabel>Postnummer</FormLabel>
                 <FormControl>
-                  <Input placeholder="Postnummer" {...field} />
+                  <Input placeholder="123 45" {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -154,7 +154,7 @@ export const CheckoutForm = () => {
               <FormItem>
                 <FormLabel>Stad</FormLabel>
                 <FormControl>
-                  <Input placeholder="Stad" {...field} />
+                  <Input placeholder="Köping" {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -188,7 +188,7 @@ export const CheckoutForm = () => {
               <FormItem>
                 <FormLabel>Telefonnummer</FormLabel>
                 <FormControl>
-                  <Input placeholder="Telefonnummer" {...field} />
+                  <Input placeholder="070-00000" {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>

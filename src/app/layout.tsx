@@ -6,7 +6,7 @@ import { Cart, Navigation } from "@/components";
 import CartProvider from "@/lib/providers/CartProvider";
 import { cn } from "@/lib/utils";
 import { Sheet } from "@/components/ui/sheet";
-import { Toast, ToastProvider } from "@/components/ui/toast";
+import { Suspense } from "react";
 import { Toaster } from "@/components/ui/toaster";
 
 const poppins = Poppins({
@@ -35,12 +35,15 @@ export default function RootLayout({
               poppins.variable
             )}
           >
-            <Sheet>
-              <Navigation />
-              {children}
-              <Cart />
-              <Toaster />
-            </Sheet>
+            <Suspense>
+              <Sheet>
+                <Navigation />
+
+                {children}
+                <Cart />
+                <Toaster />
+              </Sheet>
+            </Suspense>
           </body>
         </html>
       </CartProvider>
