@@ -1,11 +1,11 @@
 "use client";
-import React, { useCallback, useEffect, useMemo, useState } from "react";
-import { Constraints } from "./Constraints";
 import { useCart } from "@/lib/providers/CartProvider";
-import { SheetTrigger } from "./ui/sheet";
-import { Button } from "./ui/button";
-import { FaShoppingCart } from "react-icons/fa";
+import { CircleUserRound, ShoppingCart } from "lucide-react";
 import Link from "next/link";
+import { useEffect, useState } from "react";
+import { Constraints } from "./Constraints";
+import { Button } from "./ui/button";
+import { SheetTrigger } from "./ui/sheet";
 
 export const Navigation = () => {
   const [numOfItems, setNumOfItems] = useState(0);
@@ -22,13 +22,21 @@ export const Navigation = () => {
           <Link passHref href="/">
             <h4 className="font-bold">🍬🍭🍫🥤🍿</h4>
           </Link>
-          <SheetTrigger asChild>
+          <div className="flex gap-2 items-end ">
             <Button variant={"ghost"}>
-              <FaShoppingCart size={28} />
-
-              <span>{`( ${numOfItems} )`}</span>
+              <Link passHref href="/account">
+                <CircleUserRound size={28} />
+              </Link>
             </Button>
-          </SheetTrigger>
+
+            <SheetTrigger asChild>
+              <Button variant={"ghost"}>
+                <ShoppingCart size={28} fill="black" />
+
+                <span>{`( ${numOfItems} )`}</span>
+              </Button>
+            </SheetTrigger>
+          </div>
         </div>
       </Constraints>
     </nav>

@@ -22,6 +22,7 @@ export default function Home() {
   const { data: tagProducts } = useQuery({
     queryKey: ["products", search ?? ""],
     queryFn: () => getProductsByTag(search ?? ""),
+    enabled: !!search,
   });
 
   if (!initialProducts) {
@@ -29,12 +30,14 @@ export default function Home() {
   }
 
   return (
-    <main className=" min-h-screen">
+    <main className=" min-h-screen space-y-4">
       <Constraints>
         {tagProducts?.data.products && tagProducts.data.name && (
           <h4>
-            {tagProducts?.data.products.length} träffar på "
-            <span className="font-semibold">{tagProducts?.data.name}</span>"
+            {tagProducts?.data.products.length} träffar på{" "}
+            <span className="font-semibold italic">
+              {tagProducts?.data.name}
+            </span>
           </h4>
         )}
 

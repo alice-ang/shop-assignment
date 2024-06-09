@@ -1,7 +1,7 @@
 import { Tag } from "@/lib/types";
-import React, { FC } from "react";
-import { Badge } from "./ui/badge";
 import Link from "next/link";
+import { FC } from "react";
+import { Badge } from "./ui/badge";
 
 type TagListProps = {
   tags: Tag[];

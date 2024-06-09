@@ -1,10 +1,9 @@
 "use client";
-import React from "react";
-import { useParams } from "next/navigation";
-import dynamic from "next/dynamic";
-import { useWindowSize } from "@uidotdev/usehooks";
-import Link from "next/link";
 import { Button } from "@/components/ui/button";
+import { useWindowSize } from "@uidotdev/usehooks";
+import dynamic from "next/dynamic";
+import Link from "next/link";
+import { useParams } from "next/navigation";
 
 const Confetti = dynamic(() => import("react-confetti"), {
   ssr: false,

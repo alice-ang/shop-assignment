@@ -1,7 +1,9 @@
 "use client";
-import React from "react";
 import { useCart } from "@/lib/providers/CartProvider";
 import Image from "next/image";
+import Link from "next/link";
+import { QuantityButtons } from "./QuantityButtons";
+import { Button } from "./ui/button";
 import {
   SheetClose,
   SheetContent,
@@ -10,9 +12,6 @@ import {
   SheetHeader,
   SheetTitle,
 } from "./ui/sheet";
-import { Button } from "./ui/button";
-import Link from "next/link";
-import { QuantityButtons } from "./QuantityButtons";
 
 export const Cart = () => {
   const { cartItems, clearCart, getCartTotalPrice, getCartTotalItems } =

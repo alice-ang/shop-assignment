@@ -16,7 +16,7 @@ export type CartItem = Pick<
   "id" | "images" | "name" | "price" | "quantity" | "stock_quantity"
 >;
 
-export type TagProduct = Omit<Product, "description" | " quantity">;
+export type TagProduct = Omit<Product, "description" | "quantity">;
 
 export type Order = {
   customer_first_name: string;
@@ -36,7 +36,7 @@ export type API_Response = {
   data: OrderResponse;
 };
 
-type OrderResponse = Omit<Order, " order_items"> & {
+export type OrderResponse = Omit<Order, "order_items"> & {
   id: number;
   user_id: number;
   order_date: string;

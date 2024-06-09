@@ -1,16 +1,15 @@
 "use client";
 
-import { useParams } from "next/navigation";
-import { getProductById } from "@/lib/api";
-import { useQuery } from "@tanstack/react-query";
-import Markdown from "react-markdown";
-import rehypeRaw from "rehype-raw";
-import Image from "next/image";
-import { useCart } from "@/lib/providers/CartProvider";
-import { Button } from "@/components/ui/button";
 import { Constraints } from "@/components";
 import { TagList } from "@/components/TagList";
-import { useRouter } from "next/navigation";
+import { Button } from "@/components/ui/button";
+import { getProductById } from "@/lib/api";
+import { useCart } from "@/lib/providers/CartProvider";
+import { useQuery } from "@tanstack/react-query";
+import Image from "next/image";
+import { useParams, useRouter } from "next/navigation";
+import Markdown from "react-markdown";
+import rehypeRaw from "rehype-raw";
 
 export default function ProductPage() {
   const params = useParams<{ id: string }>();

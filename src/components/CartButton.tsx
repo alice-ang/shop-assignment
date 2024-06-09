@@ -1,5 +1,4 @@
 import { useCart } from "@/lib/providers/CartProvider";
-import React from "react";
 
 export const CartButton = () => {
   const { getCartTotalItems } = useCart();

@@ -1,10 +1,10 @@
-import { Product, TagProduct } from "@/lib/types";
-import React, { FC } from "react";
-import Image from "next/image";
 import { useCart } from "@/lib/providers/CartProvider";
-import Link from "next/link";
-import { Button } from "./ui/button";
+import { CartItem, Product, TagProduct } from "@/lib/types";
 import { cn } from "@/lib/utils";
+import Image from "next/image";
+import Link from "next/link";
+import { FC } from "react";
+import { Button } from "./ui/button";
 
 type ProductItemProps = {
   product: Product | TagProduct;
@@ -51,7 +51,7 @@ export const ProductItem: FC<ProductItemProps> = ({ product }) => {
         </div>
 
         <Button
-          onClick={() => addToCart(product)}
+          onClick={() => addToCart(product as CartItem)}
           className="w-full"
           variant="secondary"
         >

@@ -1,4 +1,4 @@
-import React, { ReactNode } from "react";
+import { ReactNode } from "react";
 
 export const Constraints = ({ children }: { children: ReactNode }) => {
   return (

@@ -1,5 +1,13 @@
 import axios from "axios";
-import { API_Response, Order, Product, Tag, TagProduct } from "./types";
+import {
+  API_Response,
+  Order,
+  OrderResponse,
+  Product,
+  Tag,
+  TagProduct,
+} from "./types";
+import { toast } from "@/components/ui/use-toast";
 
 const API_URL = "https://www.bortakvall.se/api/v2";
 
@@ -11,22 +19,52 @@ const instance = axios.create({
   },
 });
 
-const get = async <T = any>(endpoint: string) => {
-  const res = await instance.get<T>(endpoint);
+type ValidationError = {
+  message: string;
+  errors: Record<string, string[]>;
+};
 
-  return res.data;
+const get = async <T>(endpoint: string) => {
+  try {
+    const res = await instance.get<T>(endpoint);
+    return res.data;
+  } catch (error) {
+    if (axios.isAxiosError<ValidationError, Record<string, unknown>>(error)) {
+      toast({
+        variant: "destructive",
+        title: error.response?.data.message || "Något gick fel",
+      });
+    } else {
+      console.error(error);
+    }
+  }
 };
 
 const post = async <Payload, Response = unknown>(
   endpoint: string,
   data: Payload
 ) => {
-  const res = await instance.post<Response>(endpoint, data);
-  return res.data;
+  try {
+    const res = await instance.post<Response>(endpoint, data);
+    return res.data;
+  } catch (error) {
+    if (axios.isAxiosError<ValidationError, Record<string, unknown>>(error)) {
+      toast({
+        variant: "destructive",
+        title: error.response?.data.message || "Något gick fel",
+      });
+    } else {
+      console.error(error);
+    }
+  }
 };
 
 export const placeOrder = async (order: Order) => {
   return post<Order, API_Response>("/users/46/orders", order);
+};
+
+export const getOrders = async () => {
+  return get<{ status: string; data: OrderResponse[] }>("/users/46/orders");
 };
 
 export const getProducts = async () => {

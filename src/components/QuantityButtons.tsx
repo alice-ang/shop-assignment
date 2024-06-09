@@ -1,8 +1,8 @@
 "use client";
-import React, { FC } from "react";
-import { Button } from "./ui/button";
 import { useCart } from "@/lib/providers/CartProvider";
 import { CartItem } from "@/lib/types";
+import { FC } from "react";
+import { Button } from "./ui/button";
 
 export const QuantityButtons: FC<{ product: CartItem }> = ({ product }) => {
   const { removeFromCart, addToCart } = useCart();

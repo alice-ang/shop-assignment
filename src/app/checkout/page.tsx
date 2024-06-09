@@ -1,7 +1,6 @@
 "use client";
 import { CheckoutForm, CheckoutTable, Constraints } from "@/components";
 import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
 import { useCart } from "@/lib/providers/CartProvider";
 
 export default function CheckoutPage() {

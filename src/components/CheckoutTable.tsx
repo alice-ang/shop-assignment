@@ -1,28 +1,21 @@
 "use client";
-import React, { useEffect, useState } from "react";
-import { Button } from "./ui/button";
+import { useCart } from "@/lib/providers/CartProvider";
+import Image from "next/image";
+import { useEffect, useState } from "react";
+import { QuantityButtons } from "./QuantityButtons";
 import {
   Table,
-  TableHeader,
-  TableRow,
-  TableHead,
   TableBody,
   TableCell,
   TableFooter,
+  TableHead,
+  TableHeader,
+  TableRow,
 } from "./ui/table";
-import { useCart } from "@/lib/providers/CartProvider";
-import Image from "next/image";
-import { QuantityButtons } from "./QuantityButtons";
 
 export const CheckoutTable = () => {
   const [numOfItems, setNumOfItems] = useState(0);
-  const {
-    cartItems,
-    removeFromCart,
-    addToCart,
-    getCartTotalPrice,
-    getCartTotalItems,
-  } = useCart();
+  const { cartItems, getCartTotalPrice, getCartTotalItems } = useCart();
 
   useEffect(() => {
     setNumOfItems(getCartTotalItems());
