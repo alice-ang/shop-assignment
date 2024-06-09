@@ -1,5 +1,12 @@
 import axios from "axios";
-import { API_Response, Order, Product, Tag, TagProduct } from "./types";
+import {
+  API_Response,
+  Order,
+  OrderResponse,
+  Product,
+  Tag,
+  TagProduct,
+} from "./types";
 
 const API_URL = "https://www.bortakvall.se/api/v2";
 
@@ -11,7 +18,7 @@ const instance = axios.create({
   },
 });
 
-const get = async <T = any>(endpoint: string) => {
+const get = async <T>(endpoint: string) => {
   const res = await instance.get<T>(endpoint);
 
   return res.data;
@@ -27,6 +34,10 @@ const post = async <Payload, Response = unknown>(
 
 export const placeOrder = async (order: Order) => {
   return post<Order, API_Response>("/users/46/orders", order);
+};
+
+export const getOrders = async () => {
+  return get<{ status: string; data: OrderResponse[] }>("/users/46/orders");
 };
 
 export const getProducts = async () => {

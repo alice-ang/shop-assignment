@@ -29,7 +29,7 @@ export default function Home() {
   }
 
   return (
-    <main className=" min-h-screen">
+    <main className=" min-h-screen space-y-4">
       <Constraints>
         {tagProducts?.data.products && tagProducts.data.name && (
           <h4>

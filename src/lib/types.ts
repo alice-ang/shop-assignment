@@ -36,7 +36,7 @@ export type API_Response = {
   data: OrderResponse;
 };
 
-type OrderResponse = Omit<Order, " order_items"> & {
+export type OrderResponse = Omit<Order, " order_items"> & {
   id: number;
   user_id: number;
   order_date: string;

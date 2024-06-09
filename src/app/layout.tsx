@@ -1,13 +1,13 @@
+import { Cart, Navigation } from "@/components";
+import { Sheet } from "@/components/ui/sheet";
+import { Toaster } from "@/components/ui/toaster";
+import CartProvider from "@/lib/providers/CartProvider";
+import TanStackProvider from "@/lib/providers/TanStackProvider";
+import { cn } from "@/lib/utils";
 import type { Metadata } from "next";
 import { Poppins } from "next/font/google";
-import "./globals.css";
-import TanStackProvider from "@/lib/providers/TanStackProvider";
-import { Cart, Navigation } from "@/components";
-import CartProvider from "@/lib/providers/CartProvider";
-import { cn } from "@/lib/utils";
-import { Sheet } from "@/components/ui/sheet";
 import { Suspense } from "react";
-import { Toaster } from "@/components/ui/toaster";
+import "./globals.css";
 
 const poppins = Poppins({
   subsets: ["latin"],

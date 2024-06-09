@@ -1,13 +1,13 @@
 "use client";
+import { toast } from "@/components/ui/use-toast";
 import {
-  createContext,
-  useState,
-  useEffect,
   PropsWithChildren,
+  createContext,
   useContext,
+  useEffect,
+  useState,
 } from "react";
 import { CartItem } from "../types";
-import { toast } from "@/components/ui/use-toast";
 
 type CartData = {
   cartItems: CartItem[];
