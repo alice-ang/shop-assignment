@@ -22,6 +22,7 @@ export default function Home() {
   const { data: tagProducts } = useQuery({
     queryKey: ["products", search ?? ""],
     queryFn: () => getProductsByTag(search ?? ""),
+    enabled: !!search,
   });
 
   if (!initialProducts) {
