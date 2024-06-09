@@ -51,7 +51,7 @@ export const CheckoutForm = () => {
       } else {
         toast({
           variant: "destructive",
-          title: data?.message,
+          title: data?.message || "Något gick fel",
         });
       }
     },
