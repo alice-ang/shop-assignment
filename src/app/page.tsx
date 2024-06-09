@@ -33,8 +33,10 @@ export default function Home() {
       <Constraints>
         {tagProducts?.data.products && tagProducts.data.name && (
           <h4>
-            {tagProducts?.data.products.length} träffar på "
-            <span className="font-semibold">{tagProducts?.data.name}</span>"
+            {tagProducts?.data.products.length} träffar på{" "}
+            <span className="font-semibold italic">
+              {tagProducts?.data.name}
+            </span>
           </h4>
         )}
 
